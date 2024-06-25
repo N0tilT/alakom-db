@@ -6,9 +6,16 @@ ENV POSTGRES_DB=Cafedral
 ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=1
 
-# Copy the database dump file into the container
-COPY new.sql /new.sql
 
-# Run pg_restore to restore the database from the dump file
-# Be sure to replace the database name, username, and dump file name with your actual values
-RUN pg_restore --dbname=$POSTGRES_DB --username=$POSTGRES_USER /new.sql
+# Create a directory to store the dump file inside the container
+WORKDIR /docker-entrypoint-initdb.d
+
+# Copy the database dump file into the directory where PostgreSQL will look for initialization scripts
+COPY new.sql new.sql
+
+# Start the PostgreSQL database server
+CMD ["postgres"]
+
+# Execute the restore command inside the running container
+# Use the password provided through the environment variable
+RUN pg_restore --dbname=$POSTGRES_DB --username=$POSTGRES_USER --no-owner --no-privileges /new.sql
