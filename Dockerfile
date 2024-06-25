@@ -7,8 +7,8 @@ ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=1
 
 # Copy the database dump file into the container
-COPY mydb_dump_file.dump /mydb_dump_file.dump
+COPY new.sql /new.sql
 
 # Run pg_restore to restore the database from the dump file
 # Be sure to replace the database name, username, and dump file name with your actual values
-RUN pg_restore --dbname=$POSTGRES_DB --username=$POSTGRES_USER /mydb_dump_file.dump
+RUN pg_restore --dbname=$POSTGRES_DB --username=$POSTGRES_USER /new.sql
