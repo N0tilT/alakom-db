@@ -10,5 +10,5 @@ until pg_isready; do
   sleep 1
 done
 
-# Restore the SQL dump file using pg_restore
-pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" /docker-entrypoint-initdb.d/new.sql
+# Restore the SQL dump file using pg_restore as the "postgres" user
+gosu postgres pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" /docker-entrypoint-initdb.d/new.sql
