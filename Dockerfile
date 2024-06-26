@@ -9,5 +9,8 @@ ENV POSTGRES_PASSWORD=1
 # Copy the SQL dump file into the container
 COPY new.sql /docker-entrypoint-initdb.d/
 
-# Add command to restore the SQL dump file using pg_restore
-RUN pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" /docker-entrypoint-initdb.d/new.sql
+# Copy the custom initialization script
+COPY init.sh /docker-entrypoint-initdb.d/
+
+# Grant execution permissions to the custom initialization script
+RUN chmod +x /docker-entrypoint-initdb.d/init.sh
