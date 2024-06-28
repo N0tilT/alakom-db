@@ -8,4 +8,4 @@ ENV POSTGRES_PASSWORD=1
 
 # Copy the SQL dump file into the container
 COPY new.sql /docker-entrypoint-initdb.d/
-ENTRYPOINT [ "pg_restore", "--verbose", "--clean", "--no-acl", "--no-owner", "-h", "localhost", "-p", "5432", "-U", "postgres", "-d", "Cafedral", "<", "./new.sql"]
+ENTRYPOINT [ "pg_restore", "--verbose", "--clean", "--no-acl", "--no-owner", "-U", "postgres", "-d", "Cafedral", "./new.sql"]
